@@ -48,13 +48,14 @@ class CellType(Enum):
     BLACK_HOLE = 2
 
 class Action(Enum):
-    MOVE = "MOVE_FORWARD"
+    MOVE_FORWARD = "MOVE_FORWARD"
     TURN_0 = "TURN_0"
     TURN_1 = "TURN_1"
     TURN_2 = "TURN_2"
     TURN_3 = "TURN_3"
     SHUTDOWN = "SHUTDOWN"
     COMMUNICATE = "COMMUNICATE"
+    SUCK_IRIDIO = "SUCK_IRIDIO"
     WAIT = "WAIT"
 
 class DeathCause(Enum):
