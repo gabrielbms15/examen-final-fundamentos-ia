@@ -112,9 +112,7 @@ class TestSimulator(unittest.TestCase):
             
         sim.run()
         
-        # El loop debería terminar en t=5 por "TIME_LIMIT"
-        # Comprobamos la llamada al dummy logger
-        self.assertTrue(True) # Si run termina, el test pasa. En t=5
+        self.assertEqual(sim.termination_reason, "TIME_LIMIT")
 
     def test_6_condicion_termino_iridio_agotado(self):
         config.N_IRIDIO = 1
@@ -143,6 +141,7 @@ class TestSimulator(unittest.TestCase):
         
         # Debería terminar porque len(iridio_positions) == 0
         self.assertEqual(len(sim.iridio_positions), 0)
+        self.assertEqual(sim.termination_reason, "ALL_IRIDIO_COLLECTED")
 
     def test_7_posiciones_actualizadas_correctamente(self):
         sim = Simulator()

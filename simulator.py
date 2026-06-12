@@ -34,6 +34,8 @@ class Simulator:
         self.monster_positions: Dict[MonsterAgent, Tuple[int, int, int]] = {}
         self.iridio_positions: Set[Tuple[int, int, int]] = set()
         
+        self.termination_reason = None
+        
         self.logger = _DummyLogger()
         self.metrics = _DummyMetrics()
         
@@ -76,6 +78,7 @@ class Simulator:
             self.step(t)
             term_reason = self._check_termination(t)
             if term_reason is not None:
+                self.termination_reason = term_reason
                 self.logger.log_simulation_end(term_reason, t)
                 print(f"[Simulator] Simulación terminada en T={t}. Razón: {term_reason}")
                 break
