@@ -6,19 +6,15 @@ from config import Action, DeathCause, DIRECTIONS
 from world import World
 from robot_agent import RobotAgent
 from monster_agent import MonsterAgent
+from logger import SimLogger
+from metrics import MetricsCollector
 
 
-class _DummyLogger:
-    def __getattr__(self, name):
-        return lambda *args, **kwargs: None
-
-class _DummyMetrics:
-    def record(self, *args, **kwargs): pass
-    def generate_summary(self): return {}
+# Dummy classes removed, now importing real ones.
 
 
 class Simulator:
-    def __init__(self):
+    def __init__(self, logger=None, metrics=None):
         self.world = World(
             N=config.N,
             P_free=config.P_FREE,
@@ -36,8 +32,8 @@ class Simulator:
         
         self.termination_reason = None
         
-        self.logger = _DummyLogger()
-        self.metrics = _DummyMetrics()
+        self.logger = logger or SimLogger()
+        self.metrics = metrics or MetricsCollector()
         
     def initialize(self):
         """Ubica todas las entidades aleatoriamente en celdas FREE vacías."""
@@ -166,7 +162,8 @@ class Simulator:
                 self.logger.log_iridio_collected(pos, robot.id, t)
                 
         elif action == "SHUTDOWN":
-            self.logger.log_robot_destroyed(robot.id, result["reason"], t)
+            self.logger.log_robot_destroyed(robot.id, result["reason"], t, robot_agent=robot)
+            robot.memory.clear()
 
     def _handle_monster_result(self, monster: MonsterAgent, result: dict, t: int):
         action = result["action"]
@@ -174,7 +171,8 @@ class Simulator:
         if "ROBOKILLER" in action:
             robot_killed = result.get("robot_killed")
             if robot_killed is not None:
-                self.logger.log_robot_destroyed(robot_killed.id, "MONSTER_ROBOKILLER", t)
+                self.logger.log_robot_destroyed(robot_killed.id, "MONSTER_ROBOKILLER", t, robot_agent=robot_killed)
+                robot_killed.memory.clear()
                 if robot_killed in self.robots:
                     self.robots.remove(robot_killed)
                     
@@ -212,7 +210,8 @@ class Simulator:
                 self.world.remove_entity(robot, "robot", *pos)
                 monster.robots_eaten += 1
                 self.robots.remove(robot)
-                self.logger.log_robot_destroyed(robot.id, "MONSTER_COLLISION", t)
+                self.logger.log_robot_destroyed(robot.id, "MONSTER_COLLISION", t, robot_agent=robot)
+                robot.memory.clear()
 
     def _resolve_communication(self, robot_a: RobotAgent, robot_b: RobotAgent, t: int, perception_a):
         decision_a = robot_a.communicate(robot_b)
