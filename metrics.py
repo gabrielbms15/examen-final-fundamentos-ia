@@ -141,6 +141,14 @@ class MetricsCollector:
         recolectado = sum(r.iridio_count for r in self._all_robots.values())
         return recolectado / config.N_IRIDIO
 
+    def get_visit_heatmap(self, N: int) -> list:
+        """Retorna array N×N con conteo de visitas colapsando eje Z."""
+        heatmap = [[0]*N for _ in range(N)]
+        for positions in self._celdas_visitadas_por_robot.values():
+            for (x, y, z) in positions:
+                heatmap[x][y] += 1
+        return heatmap
+
     def generate_summary(self, world=None, monsters=None) -> Dict[str, Any]:
         """Resumen estadístico final (REQ-MET-05)"""
         

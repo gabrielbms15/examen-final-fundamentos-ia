@@ -1,0 +1,282 @@
+[
+  {
+    "t": 0,
+    "percepcion": {
+      "olor": false,
+      "brillo": false,
+      "iridio_aqui": false,
+      "robot_delante": false,
+      "posicion": [
+        0,
+        3,
+        1
+      ],
+      "direccion": [
+        1,
+        0,
+        0
+      ],
+      "vacuscopio": false,
+      "bucle": false
+    },
+    "accion": "MOVE_FORWARD",
+    "posicion": [
+      0,
+      3,
+      1
+    ],
+    "resultado": "MOVE_FORWARD"
+  },
+  {
+    "t": 1,
+    "percepcion": {
+      "olor": false,
+      "brillo": false,
+      "iridio_aqui": false,
+      "robot_delante": false,
+      "posicion": [
+        1,
+        3,
+        1
+      ],
+      "direccion": [
+        1,
+        0,
+        0
+      ],
+      "vacuscopio": false,
+      "bucle": false
+    },
+    "accion": "MOVE_FORWARD",
+    "posicion": [
+      1,
+      3,
+      1
+    ],
+    "resultado": "MOVE_FORWARD"
+  },
+  {
+    "t": 2,
+    "percepcion": {
+      "olor": false,
+      "brillo": false,
+      "iridio_aqui": false,
+      "robot_delante": false,
+      "posicion": [
+        2,
+        3,
+        1
+      ],
+      "direccion": [
+        1,
+        0,
+        0
+      ],
+      "vacuscopio": false,
+      "bucle": false
+    },
+    "accion": "MOVE_FORWARD",
+    "posicion": [
+      2,
+      3,
+      1
+    ],
+    "resultado": "MOVE_FORWARD"
+  },
+  {
+    "t": 3,
+    "percepcion": {
+      "olor": false,
+      "brillo": false,
+      "iridio_aqui": false,
+      "robot_delante": false,
+      "posicion": [
+        3,
+        3,
+        1
+      ],
+      "direccion": [
+        1,
+        0,
+        0
+      ],
+      "vacuscopio": false,
+      "bucle": false
+    },
+    "accion": "MOVE_FORWARD",
+    "posicion": [
+      3,
+      3,
+      1
+    ],
+    "resultado": "MOVE_FORWARD"
+  },
+  {
+    "t": 4,
+    "percepcion": {
+      "olor": false,
+      "brillo": false,
+      "iridio_aqui": false,
+      "robot_delante": false,
+      "posicion": [
+        4,
+        3,
+        1
+      ],
+      "direccion": [
+        1,
+        0,
+        0
+      ],
+      "vacuscopio": false,
+      "bucle": false
+    },
+    "accion": "MOVE_FORWARD",
+    "posicion": [
+      4,
+      3,
+      1
+    ],
+    "resultado": "BLOCKED"
+  },
+  {
+    "t": 5,
+    "percepcion": {
+      "olor": false,
+      "brillo": false,
+      "iridio_aqui": false,
+      "robot_delante": false,
+      "posicion": [
+        4,
+        3,
+        1
+      ],
+      "direccion": [
+        1,
+        0,
+        0
+      ],
+      "vacuscopio": true,
+      "bucle": false
+    },
+    "accion": "TURN_0",
+    "posicion": [
+      4,
+      3,
+      1
+    ],
+    "resultado": "TURN_0"
+  },
+  {
+    "t": 6,
+    "percepcion": {
+      "olor": false,
+      "brillo": false,
+      "iridio_aqui": false,
+      "robot_delante": false,
+      "posicion": [
+        4,
+        3,
+        1
+      ],
+      "direccion": [
+        0,
+        1,
+        0
+      ],
+      "vacuscopio": false,
+      "bucle": false
+    },
+    "accion": "MOVE_FORWARD",
+    "posicion": [
+      4,
+      3,
+      1
+    ],
+    "resultado": "MOVE_FORWARD"
+  },
+  {
+    "t": 7,
+    "percepcion": {
+      "olor": false,
+      "brillo": false,
+      "iridio_aqui": false,
+      "robot_delante": false,
+      "posicion": [
+        4,
+        4,
+        1
+      ],
+      "direccion": [
+        0,
+        1,
+        0
+      ],
+      "vacuscopio": false,
+      "bucle": false
+    },
+    "accion": "MOVE_FORWARD",
+    "posicion": [
+      4,
+      4,
+      1
+    ],
+    "resultado": "BLOCKED"
+  },
+  {
+    "t": 8,
+    "percepcion": {
+      "olor": false,
+      "brillo": false,
+      "iridio_aqui": false,
+      "robot_delante": false,
+      "posicion": [
+        4,
+        4,
+        1
+      ],
+      "direccion": [
+        0,
+        1,
+        0
+      ],
+      "vacuscopio": true,
+      "bucle": false
+    },
+    "accion": "TURN_0",
+    "posicion": [
+      4,
+      4,
+      1
+    ],
+    "resultado": "TURN_0"
+  },
+  {
+    "t": 9,
+    "percepcion": {
+      "olor": false,
+      "brillo": false,
+      "iridio_aqui": false,
+      "robot_delante": false,
+      "posicion": [
+        4,
+        4,
+        1
+      ],
+      "direccion": [
+        -1,
+        0,
+        0
+      ],
+      "vacuscopio": false,
+      "bucle": false
+    },
+    "accion": "MOVE_FORWARD",
+    "posicion": [
+      4,
+      4,
+      1
+    ],
+    "resultado": "SHUTDOWN"
+  }
+]

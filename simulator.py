@@ -67,8 +67,8 @@ class Simulator:
         self.world.update_iridio_glow()
         self.world.update_monster_smell()
 
-    def run(self):
-        """Bucle principal."""
+    def run(self, verbose: bool = True):
+        """Bucle principal de simulación."""
         t = config.T_INICIO
         while True:
             self.step(t)
@@ -76,7 +76,8 @@ class Simulator:
             if term_reason is not None:
                 self.termination_reason = term_reason
                 self.logger.log_simulation_end(term_reason, t)
-                print(f"[Simulator] Simulación terminada en T={t}. Razón: {term_reason}")
+                if verbose:
+                    print(f"[Simulator] Simulación terminada en T={t}. Razón: {term_reason}")
                 break
             t += 1
             
