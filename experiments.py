@@ -68,7 +68,11 @@ def run_learning_curve_experiment() -> Dict[str, Any]:
     
     try:
         _restore_config(BASELINE)
-        config.T_FIN = 100
+        config.T_FIN = 200
+        config.N_MONSTRUOS = 0
+        config.N_IRIDIO = 40
+        config.N_ROBOT = 4
+        config.N = 5
         
         with open(os.devnull, 'w') as f, contextlib.redirect_stdout(f):
             sim = Simulator()
@@ -77,16 +81,16 @@ def run_learning_curve_experiment() -> Dict[str, Any]:
             history = sim.metrics.history
             
         # history está indexado por t (aproximadamente, asumiendo snapshots secuenciales)
-        # Buscar iridio acumulado en t=50 y t=100
-        iridio_t50 = next((h["iridio_total_recolectado"] for h in history if h["t"] == 50), 0)
-        iridio_t100 = history[-1]["iridio_total_recolectado"] if history else 0
+        # Buscar iridio acumulado en t=100 y t=200
+        iridio_t100 = next((h["iridio_total_recolectado"] for h in history if h["t"] == 100), 0)
+        iridio_t200 = history[-1]["iridio_total_recolectado"] if history else 0
         
-        recolectado_primera_mitad = iridio_t50
-        recolectado_segunda_mitad = iridio_t100 - iridio_t50
+        recolectado_primera_mitad = iridio_t100
+        recolectado_segunda_mitad = iridio_t200 - iridio_t100
         
         return {
-            "primera_mitad_0_50": recolectado_primera_mitad,
-            "segunda_mitad_50_100": recolectado_segunda_mitad
+            "primera_mitad_0_100": recolectado_primera_mitad,
+            "segunda_mitad_101_200": recolectado_segunda_mitad
         }
             
     finally:
@@ -171,31 +175,37 @@ def run_communication_experiment() -> Dict[str, Any]:
     original = {k: getattr(config, k) for k in BASELINE.keys()}
     
     try:
-        # CON comunicación (comportamiento normal)
-        _restore_config(BASELINE)
-        config.N_ROBOT = 4
-        config.N = 4
-        summary_con = _run_fast_simulator()
-        
-        # SIN comunicación (mockeando communicate() para siempre ignorar y avanzar o girar deterministicamente)
-        _restore_config(BASELINE)
-        config.N_ROBOT = 4
-        config.N = 4
-        
-        with open(os.devnull, 'w') as f, contextlib.redirect_stdout(f):
-            sim_sin = Simulator()
-            sim_sin.initialize()
-            # Mock de deshabilitación: no negocian, simplemente dicen "yo sigo"
-            for robot in sim_sin.robots:
-                robot.communicate = lambda other: "yo_sigo"
+        results = {}
+        for r in [2, 4, 6, 8, 10]:
+            # CON comunicación
+            _restore_config(BASELINE)
+            config.N = 3  # N=3 for tight map
+            config.N_ROBOT = r
+            summary_con = _run_fast_simulator()
             
-            sim_sin.run(verbose=False)
-            summary_sin = sim_sin.metrics.generate_summary(world=sim_sin.world, monsters=sim_sin.monsters)
+            # SIN comunicación
+            _restore_config(BASELINE)
+            config.N = 3
+            config.N_ROBOT = r
+            with open(os.devnull, 'w') as f, contextlib.redirect_stdout(f):
+                sim_sin = Simulator()
+                sim_sin.initialize()
+                for robot in sim_sin.robots:
+                    original_perceive = robot.perceive
+                    def perceive_sin_comm(w, p, orig=original_perceive):
+                        perc = orig(w, p)
+                        perc.robot_delante = False
+                        return perc
+                    robot.perceive = perceive_sin_comm
+                sim_sin.run(verbose=False)
+                summary_sin = sim_sin.metrics.generate_summary(world=sim_sin.world, monsters=sim_sin.monsters)
             
-        return {
-            "score_con_comunicacion": summary_con["global_score"],
-            "score_sin_comunicacion": summary_sin["global_score"]
-        }
+            results[r] = {
+                "score_con": summary_con["global_score"],
+                "score_sin": summary_sin["global_score"]
+            }
+            
+        return results
             
     finally:
         _restore_config(original)
@@ -214,10 +224,11 @@ def run_episodic_test() -> Dict[str, Any]:
             sim_limpio = Simulator()
             sim_limpio.initialize()
             for r in sim_limpio.robots:
-                # El robot ya no recuerda, ergo, no aprende reglas
-                r.update_memory = lambda *args, **kwargs: None
+                # El robot es amnésico: no detecta bucles y no genera reglas de su memoria
+                r._sense_infinitometro = lambda *args, **kwargs: False
+                r.generate_new_rules = lambda *args, **kwargs: None
             sim_limpio.run(verbose=False)
-            res_limpio = sim_limpio.metrics.generate_summary()
+            res_limpio = sim_limpio.metrics.generate_summary(world=sim_limpio.world, monsters=sim_limpio.monsters)
             
         # Con memoria normal
         _restore_config(BASELINE)

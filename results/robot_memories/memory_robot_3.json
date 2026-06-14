@@ -2,29 +2,29 @@
   {
     "t": 0,
     "percepcion": {
-      "olor": true,
+      "olor": false,
       "brillo": false,
       "iridio_aqui": false,
       "robot_delante": false,
       "posicion": [
         2,
-        2,
-        4
+        3,
+        0
       ],
       "direccion": [
+        1,
         0,
-        -1,
         0
       ],
       "vacuscopio": false,
       "bucle": false
     },
-    "accion": "TURN_0",
+    "accion": "MOVE_FORWARD",
     "posicion": [
       2,
-      2,
-      4
+      3,
+      0
     ],
-    "resultado": "TURN_0"
+    "resultado": "SHUTDOWN"
   }
 ]

@@ -160,11 +160,32 @@ def plot_scalability(scalability_results, out_dir: str = "results"):
     plt.plot(x, y, marker='o', linestyle='-', color='purple', linewidth=2)
     
     plt.title("Prueba de Escalabilidad")
-    plt.xlabel("Tamaño del Mundo (N)")
-    plt.ylabel("Tiempo de Simulación (segundos)")
-    plt.grid(True, alpha=0.5)
+    plt.ylabel("Tiempo Promedio de Ejecución (s)")
+    plt.title("Escalabilidad del Simulador: Tiempo vs Tamaño del Mundo (N)")
+    plt.grid(True, linestyle='--', alpha=0.7)
     
     filepath = os.path.join(out_dir, "scalability_time.png")
+    plt.savefig(filepath, bbox_inches='tight')
+    plt.close()
+
+def plot_communication_impact(results: dict, out_dir: str = "results"):
+    """Grafica el impacto de la comunicación vs cantidad de robots."""
+    _ensure_dir(out_dir)
+    robots = sorted(list(results.keys()))
+    scores_con = [results[r]["score_con"] for r in robots]
+    scores_sin = [results[r]["score_sin"] for r in robots]
+    
+    plt.figure(figsize=(10, 6))
+    plt.plot(robots, scores_con, marker='o', label='Con Comunicación', color='blue', linewidth=2)
+    plt.plot(robots, scores_sin, marker='s', label='Sin Comunicación', color='red', linewidth=2, linestyle='--')
+    
+    plt.xlabel("Densidad (Número de Robots)")
+    plt.ylabel("Puntaje Global (R_global)")
+    plt.title("Impacto del Protocolo de Comunicación según Densidad (N=3)")
+    plt.grid(True, linestyle='--', alpha=0.7)
+    plt.legend()
+    
+    filepath = os.path.join(out_dir, "comm_impact.png")
     plt.savefig(filepath, bbox_inches='tight')
     plt.close()
 

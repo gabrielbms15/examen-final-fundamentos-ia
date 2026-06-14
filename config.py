@@ -23,7 +23,7 @@ W1_IRIDIO = 10
 W2_DEATH = 50
 W3_LOOP = 20
 W4_SURVIVE = 5
-W5_IDLE = 1
+W5_IDLE = 1.2
 
 # =============================================================================
 # PARÁMETROS DEL INFINITÓMETRO

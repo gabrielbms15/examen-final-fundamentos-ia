@@ -1,0 +1,142 @@
+[
+  {
+    "t": 0,
+    "percepcion": {
+      "olor": false,
+      "brillo": true,
+      "iridio_aqui": false,
+      "robot_delante": false,
+      "posicion": [
+        0,
+        1,
+        3
+      ],
+      "direccion": [
+        0,
+        1,
+        0
+      ],
+      "vacuscopio": false,
+      "bucle": false
+    },
+    "accion": "MOVE_FORWARD",
+    "posicion": [
+      0,
+      1,
+      3
+    ],
+    "resultado": "MOVE_FORWARD"
+  },
+  {
+    "t": 1,
+    "percepcion": {
+      "olor": true,
+      "brillo": false,
+      "iridio_aqui": false,
+      "robot_delante": false,
+      "posicion": [
+        0,
+        2,
+        3
+      ],
+      "direccion": [
+        0,
+        1,
+        0
+      ],
+      "vacuscopio": false,
+      "bucle": false
+    },
+    "accion": "TURN_0",
+    "posicion": [
+      0,
+      2,
+      3
+    ],
+    "resultado": "TURN_0"
+  },
+  {
+    "t": 2,
+    "percepcion": {
+      "olor": true,
+      "brillo": false,
+      "iridio_aqui": false,
+      "robot_delante": false,
+      "posicion": [
+        0,
+        2,
+        3
+      ],
+      "direccion": [
+        -1,
+        0,
+        0
+      ],
+      "vacuscopio": false,
+      "bucle": false
+    },
+    "accion": "TURN_0",
+    "posicion": [
+      0,
+      2,
+      3
+    ],
+    "resultado": "TURN_0"
+  },
+  {
+    "t": 3,
+    "percepcion": {
+      "olor": true,
+      "brillo": false,
+      "iridio_aqui": false,
+      "robot_delante": false,
+      "posicion": [
+        0,
+        2,
+        3
+      ],
+      "direccion": [
+        0,
+        1,
+        0
+      ],
+      "vacuscopio": false,
+      "bucle": false
+    },
+    "accion": "TURN_0",
+    "posicion": [
+      0,
+      2,
+      3
+    ],
+    "resultado": "TURN_0"
+  },
+  {
+    "t": 4,
+    "percepcion": {
+      "olor": true,
+      "brillo": false,
+      "iridio_aqui": false,
+      "robot_delante": false,
+      "posicion": [
+        0,
+        2,
+        3
+      ],
+      "direccion": [
+        -1,
+        0,
+        0
+      ],
+      "vacuscopio": false,
+      "bucle": false
+    },
+    "accion": "TURN_0",
+    "posicion": [
+      0,
+      2,
+      3
+    ],
+    "resultado": "TURN_0"
+  }
+]
