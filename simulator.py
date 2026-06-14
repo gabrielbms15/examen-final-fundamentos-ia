@@ -24,6 +24,7 @@ class Simulator:
         )
         
         self.robots: List[RobotAgent] = []
+        self.robots_muertos: List[RobotAgent] = []
         self.monsters: List[MonsterAgent] = []
         
         self.robot_positions: Dict[RobotAgent, Tuple[int, int, int]] = {}
@@ -31,6 +32,12 @@ class Simulator:
         self.iridio_positions: Set[Tuple[int, int, int]] = set()
         
         self.termination_reason = None
+        
+        self.stats_comm_activations = 0
+        self.stats_comm_both_rotated = 0
+        self.stats_comm_one_advanced = 0
+        self.stats_comm_ticks_consumed = 0
+        self.stats_monster_fusions = 0
         
         self.logger = logger or SimLogger()
         self.metrics = metrics or MetricsCollector()
@@ -51,6 +58,11 @@ class Simulator:
             init_dir = random.choice(DIRECTIONS)
             robot = RobotAgent(robot_id=i+1, initial_dir=init_dir)
             pos = self.world.get_free_random_position()
+            
+            # REC 2: Exploración por Sectores
+            if getattr(config, "ENABLE_SECTORS", False):
+                robot.assigned_octant = (i % 2, (i // 2) % 2, (i // 4) % 2)
+                
             self.world.place_entity(robot, "robot", *pos)
             self.robots.append(robot)
             self.robot_positions[robot] = pos
@@ -103,6 +115,7 @@ class Simulator:
             # Limpieza inmediata si murió en su step o por la comunicación
             if not robot.is_alive and robot in self.robots:
                 self.robots.remove(robot)
+                self.robots_muertos.append(robot)
 
         # 2. Activar monstruos (velocidad 1/4)
         if t % 4 == 0:
@@ -164,6 +177,22 @@ class Simulator:
                 
         elif action == "SHUTDOWN":
             self.logger.log_robot_destroyed(robot.id, result["reason"], t, robot_agent=robot)
+            
+            # REC 1: Memoria Compartida Selectiva
+            import config
+            if getattr(config, "ENABLE_MEMORY_BROADCAST", False) and result["reason"] == "BLACK_HOLE":
+                import copy
+                if robot.rules:
+                    bh_rule = robot.rules[-1]
+                    rx, ry, rz = self.robot_positions[robot]
+                    for other in self.robots:
+                        if other != robot and other.is_alive:
+                            ox, oy, oz = self.robot_positions[other]
+                            dist = abs(rx-ox) + abs(ry-oy) + abs(rz-oz)
+                            if dist <= 3:
+                                if bh_rule.descripcion not in [r.descripcion for r in other.rules]:
+                                    other.rules.append(copy.deepcopy(bh_rule))
+                                    
             robot.memory.clear()
 
     def _handle_monster_result(self, monster: MonsterAgent, result: dict, t: int):
@@ -188,6 +217,7 @@ class Simulator:
             else:
                 # Fusión: el monstruo que saltó fue absorbido por surviving
                 self.logger.log_monster_fuse(monster.id, surviving.id, surviving.id, t)
+                self.stats_monster_fusions += 1
                 # No actualizamos position del monster porque ya is_alive = False
 
     # =========================================================================
@@ -211,18 +241,24 @@ class Simulator:
                 self.world.remove_entity(robot, "robot", *pos)
                 monster.robots_eaten += 1
                 self.robots.remove(robot)
+                self.robots_muertos.append(robot)
                 self.logger.log_robot_destroyed(robot.id, "MONSTER_COLLISION", t, robot_agent=robot)
                 robot.memory.clear()
 
     def _resolve_communication(self, robot_a: RobotAgent, robot_b: RobotAgent, t: int, perception_a):
+        self.stats_comm_activations += 1
         decision_a = robot_a.communicate(robot_b)
         decision_b = robot_b.communicate(robot_a) # No lo usamos explícitamente según el requerimiento, la decisión rige por decision_a
+        
+        # El protocolo cuesta 1 tick según enunciado implícito, lo sumamos
+        self.stats_comm_ticks_consumed += 1
         
         pos_a = self.robot_positions[robot_a]
         pos_b = self.robot_positions[robot_b]
         
         if decision_a == "yo_sigo":
             # Robot A avanza, Robot B gira
+            self.stats_comm_one_advanced += 1
             res_a = robot_a.act(Action.MOVE_FORWARD, self.world, pos_a, t)
             if res_a["action"] == "MOVE_FORWARD":
                 self.robot_positions[robot_a] = res_a["new_position"]
@@ -239,7 +275,8 @@ class Simulator:
             # o requeriríamos leer su percepción aquí. Para simplificar, seguimos el requerimiento literal.
             
         else:
-            # Robot A gira, Robot B sigue su curso (actuará en su turno)
+            # Ambos giran
+            self.stats_comm_both_rotated += 1
             res_a = robot_a.act(Action.TURN_0, self.world, pos_a, t)
             robot_a.update_memory(t, perception_a, Action.TURN_0, res_a["action"])
             robot_a.generate_new_rules()

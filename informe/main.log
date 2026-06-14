@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.5.14)  13 JUN 2026 16:48
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.5.14)  13 JUN 2026 21:54
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -370,95 +370,161 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-LaTeX Font Info:    Trying to load font information for U+msa on input line 35.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 34.
 
  (/usr/local/texlive/2026basic/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 35.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 34.
 
 
 (/usr/local/texlive/2026basic/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-) [1{/usr/local/texlive/2026basic/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
-{/usr/local/texlive/2026basic/texmf-dist/fonts/enc/dvips/base/8r.enc}
+)
+Underfull \vbox (badness 1107) has occurred while \output is active []
+
+ [1{/usr/local/texlive/2026basic/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{
+/usr/local/texlive/2026basic/texmf-dist/fonts/enc/dvips/base/8r.enc}
 
 
 ]
-<example-image.pdf, id=16, 321.2pt x 240.9pt>
-File: example-image.pdf Graphic file (type pdf)
-<use example-image.pdf>
-Package pdftex.def Info: example-image.pdf  used on input line 118.
-(pdftex.def)             Requested size: 201.60077pt x 151.20538pt.
- [2 </usr/local/texlive/2026basic/texmf-dist/tex/latex/mwe/example-image.pdf>]
+<diagrama.png, id=16, 1541.76pt x 1027.84pt>
+File: diagrama.png Graphic file (type png)
+<use diagrama.png>
+Package pdftex.def Info: diagrama.png  used on input line 117.
+(pdftex.def)             Requested size: 201.60077pt x 134.39238pt.
 LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 1
-60.
+68.
 
 (/usr/local/texlive/2026basic/texmf-dist/tex/latex/psnfss/ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
-) [3]
+) [2 <./diagrama.png (PNG copy)>]
+Underfull \vbox (badness 1688) has occurred while \output is active []
+
+ [3]
 [4]
-Underfull \hbox (badness 10000) in paragraph at lines 361--362
+Overfull \hbox (18.0pt too wide) in paragraph at lines 402--402
+[]       \OT1/pcr/m/n/10 Calcular utilidad de {MOVE, TURN_0..3}[] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 404--405
 []\OT1/ptm/m/n/10 Al arran-car con la ma-triz vac[]^^Pa, el m[]eto-do
  []
 
 [5]
-Overfull \hbox (4.19981pt too wide) in paragraph at lines 426--426
+Overfull \hbox (4.19981pt too wide) in paragraph at lines 482--482
 []\OT1/pcr/m/n/7 Distribuci[]on real: {'FREE': 92, 'VOID': 22, 'BLACK_HOLE': 11
 }[] 
  []
 
 
-Overfull \hbox (16.7998pt too wide) in paragraph at lines 426--426
+Overfull \hbox (16.7998pt too wide) in paragraph at lines 482--482
 []\OT1/pcr/m/n/7 Porcentajes: {'FREE': 0.736, 'VOID': 0.176, 'BLACK_HOLE': 0.08
 8}[] 
  []
 
 [6]
-Overfull \hbox (62.99977pt too wide) in paragraph at lines 487--487
+Overfull \hbox (62.99977pt too wide) in paragraph at lines 563--563
 []\OT1/pcr/m/n/7 Distribuci[]on de acciones: {'MOVE_FORWARD': 15, 'TURN_0': 15,
  'SHUTDOWN': 1}[] 
  []
 
-
-Underfull \hbox (badness 2173) in paragraph at lines 494--495
+[7]
+Underfull \hbox (badness 2173) in paragraph at lines 570--571
 []\OT1/ptm/m/n/10 Se eje-cut[]o un es-ce-na-rio de prue-ba ce-rra-do y hos-til
  []
 
 
-Overfull \hbox (16.7998pt too wide) in paragraph at lines 508--508
-[]\OT1/pcr/m/n/7 [Simulator] Simulaci[]on terminada en T=30. Raz[]on: ALL_ROBOT
-S_DEAD[] 
+Overfull \hbox (204.0pt too wide) in paragraph at lines 587--587
+[]\OT1/pcr/m/n/10 [Simulator] Simulaci[]on terminada anticipadamente en T=30 po
+r ALL_ROBOTS_DEAD[] 
  []
 
-<sensitivity_N.png, id=46, 511.6716pt x 395.3169pt>
+<exploration_heatmap.png, id=45, 489.2679pt x 469.0323pt>
+File: exploration_heatmap.png Graphic file (type png)
+<use exploration_heatmap.png>
+Package pdftex.def Info: exploration_heatmap.png  used on input line 599.
+(pdftex.def)             Requested size: 180.60315pt x 173.13129pt.
+<iridium_histogram.png, id=47, 499.3857pt x 394.5942pt>
+File: iridium_histogram.png Graphic file (type png)
+<use iridium_histogram.png>
+Package pdftex.def Info: iridium_histogram.png  used on input line 612.
+(pdftex.def)             Requested size: 185.75945pt x 146.78029pt.
+<death_causes_pie.png, id=48, 459.6372pt x 475.5366pt>
+File: death_causes_pie.png Graphic file (type png)
+<use death_causes_pie.png>
+Package pdftex.def Info: death_causes_pie.png  used on input line 619.
+(pdftex.def)             Requested size: 185.75945pt x 192.18492pt.
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+<sensitivity_N.png, id=49, 511.6716pt x 395.3169pt>
 File: sensitivity_N.png Graphic file (type png)
 <use sensitivity_N.png>
-Package pdftex.def Info: sensitivity_N.png  used on input line 522.
+Package pdftex.def Info: sensitivity_N.png  used on input line 631.
 (pdftex.def)             Requested size: 232.19843pt x 179.39896pt.
-[7 <./sensitivity_N.png>]
-<metrics_timeline.png, id=53, 602.0091pt x 395.3169pt>
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[8 <./exploration_heatmap.png>]
+<sensitivity_P_negro.png, id=54, 715.473pt x 422.0568pt>
+File: sensitivity_P_negro.png Graphic file (type png)
+<use sensitivity_P_negro.png>
+Package pdftex.def Info: sensitivity_P_negro.png  used on input line 642.
+(pdftex.def)             Requested size: 232.19843pt x 136.97362pt.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+<metrics_timeline.png, id=55, 608.5134pt x 395.3169pt>
 File: metrics_timeline.png Graphic file (type png)
 <use metrics_timeline.png>
-Package pdftex.def Info: metrics_timeline.png  used on input line 533.
-(pdftex.def)             Requested size: 232.19843pt x 152.47795pt.
-
-Underfull \hbox (badness 1742) in paragraph at lines 549--551
+Package pdftex.def Info: metrics_timeline.png  used on input line 653.
+(pdftex.def)             Requested size: 206.39685pt x 134.08626pt.
+[9 <./iridium_histogram.png> <./death_causes_pie.png> <./sensitivity_N.png> <./
+sensitivity_P_negro.png> <./metrics_timeline.png>]
+Underfull \hbox (badness 1742) in paragraph at lines 677--679
 []\OT1/ptm/m/n/10 Se en-frent[]o, ba-jo la mis-ma se-mi-lla am-bien-tal es-tric
 -
  []
 
-<comm_impact.png, id=54, 623.6901pt x 395.3169pt>
+<comm_impact.png, id=64, 623.6901pt x 395.3169pt>
 File: comm_impact.png Graphic file (type png)
 <use comm_impact.png>
-Package pdftex.def Info: comm_impact.png  used on input line 561.
+Package pdftex.def Info: comm_impact.png  used on input line 695.
 (pdftex.def)             Requested size: 232.19843pt x 147.1758pt.
-[8 <./metrics_timeline.png> <./comm_impact.png>]
-<scalability_time.png, id=60, 512.3943pt x 380.1402pt>
+[10 <./comm_impact.png>]
+<scalability_time.png, id=69, 624.4128pt x 394.5942pt>
 File: scalability_time.png Graphic file (type png)
 <use scalability_time.png>
-Package pdftex.def Info: scalability_time.png  used on input line 578.
-(pdftex.def)             Requested size: 232.19843pt x 172.26219pt.
+Package pdftex.def Info: scalability_time.png  used on input line 712.
+(pdftex.def)             Requested size: 232.19843pt x 146.73212pt.
+<sensitivity_n_robot.png, id=70, 570.933pt x 354.123pt>
+File: sensitivity_n_robot.png Graphic file (type png)
+<use sensitivity_n_robot.png>
+Package pdftex.def Info: sensitivity_n_robot.png  used on input line 724.
+(pdftex.def)             Requested size: 208.97716pt x 129.61855pt.
+<sensitivity_n_monstruos.png, id=71, 570.933pt x 354.123pt>
+File: sensitivity_n_monstruos.png Graphic file (type png)
+<use sensitivity_n_monstruos.png>
+Package pdftex.def Info: sensitivity_n_monstruos.png  used on input line 731.
+(pdftex.def)             Requested size: 208.97716pt x 129.61855pt.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+
+Underfull \hbox (badness 3525) in paragraph at lines 741--742
+[]\OT1/ptm/m/n/10 Se im-ple-ment[]o un me-ca-nis-mo don-de, al mo-rir por
+ []
+
+[11 <./scalability_time.png> <./sensitivity_n_robot.png> <./sensitivity_n_monst
+ruos.png>]
+Underfull \hbox (badness 2173) in paragraph at lines 769--770
+[]\OT1/ptm/b/n/10 Propiedades Emer-gen-tes Eva-lua-das: \OT1/ptm/m/n/10 Se de-m
+ostr[]o
+ []
 
 
 ** Conference Paper **
@@ -471,9 +537,7 @@ Before submitting the final camera ready copy, remember to:
  uses only Type 1 fonts and that every step in the generation
  process uses the appropriate paper size.
 
-[9
-
- <./scalability_time.png>] (./main.aux
+[12] (./main.aux
 LaTeX Info: Redefining \. on input line 9.
 LaTeX Info: Redefining \% on input line 9.
 )
@@ -483,37 +547,37 @@ L3 programming layer <2026-01-19>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 5880 strings out of 469006
- 94767 string characters out of 5454813
- 537813 words of memory out of 5000000
- 34502 multiletter control sequences out of 15000+600000
- 673818 words of font info for 130 fonts, out of 8000000 for 9000
+ 5930 strings out of 469006
+ 96079 string characters out of 5454813
+ 538824 words of memory out of 5000000
+ 34553 multiletter control sequences out of 15000+600000
+ 672722 words of font info for 129 fonts, out of 8000000 for 9000
  319 hyphenation exceptions out of 8191
- 57i,11n,65p,1245b,365s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 57i,11n,65p,1245b,396s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2026basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmex1
 0.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/type1/public/amsfonts/cm/c
 mmi10.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/type1/public/amsfonts/
-cm/cmmi7.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/type1/public/amsfon
-ts/cm/cmmi8.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/type1/public/ams
-fonts/cm/cmmi9.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/type1/public/
-amsfonts/cm/cmr10.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/type1/publ
-ic/amsfonts/cm/cmr7.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/type1/pu
-blic/amsfonts/cm/cmr8.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/type1/
-public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/type
-1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/
-type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2026basic/texmf-dist/fon
-ts/type1/public/amsfonts/cm/cmsy9.pfb></usr/local/texlive/2026basic/texmf-dist/
-fonts/type1/public/lm/lmss17.pfb></usr/local/texlive/2026basic/texmf-dist/fonts
-/type1/urw/courier/ucrb8a.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/ty
-pe1/urw/courier/ucrr8a.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/type1
-/urw/times/utmb8a.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/type1/urw/
-times/utmbi8a.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/type1/urw/time
-s/utmr8a.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/type1/urw/times/utm
-ri8a.pfb>
-Output written on main.pdf (9 pages, 389625 bytes).
+cm/cmmi6.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/type1/public/amsfon
+ts/cm/cmmi7.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/type1/public/ams
+fonts/cm/cmmi8.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/type1/public/
+amsfonts/cm/cmmi9.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/type1/publ
+ic/amsfonts/cm/cmr10.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/type1/p
+ublic/amsfonts/cm/cmr7.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/type1
+/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/typ
+e1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/t
+ype1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2026basic/texmf-dist/fon
+ts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2026basic/texmf-dist/
+fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/local/texlive/2026basic/texmf-di
+st/fonts/type1/urw/courier/ucrb8a.pfb></usr/local/texlive/2026basic/texmf-dist/
+fonts/type1/urw/courier/ucrr8a.pfb></usr/local/texlive/2026basic/texmf-dist/fon
+ts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/ty
+pe1/urw/times/utmbi8a.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/type1/
+urw/times/utmr8a.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/type1/urw/t
+imes/utmri8a.pfb>
+Output written on main.pdf (12 pages, 1773628 bytes).
 PDF statistics:
- 142 PDF objects out of 1000 (max. 8388607)
- 84 compressed objects within 1 object stream
+ 161 PDF objects out of 1000 (max. 8388607)
+ 87 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 26 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 56 words of extra memory for PDF output out of 10000 (max. 10000000)
 

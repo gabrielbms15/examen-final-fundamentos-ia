@@ -1,6 +1,6 @@
 # Fdb version 4
-["pdflatex"] 1781385414.48566 "/Users/gabrielbms/Repositorios/[2026-1] Fundamentos de IA/final/informe/main.tex" "main.pdf" "main" 1781385415.31478 0
-  "/Users/gabrielbms/Repositorios/[2026-1] Fundamentos de IA/final/informe/main.tex" 1781385348.35834 45365 01766d70d041b63af03baaa720bce92c ""
+["pdflatex"] 1781401751.87479 "/Users/gabrielbms/Repositorios/[2026-1] Fundamentos de IA/final/informe/main.tex" "main.pdf" "main" 1781401752.7774 0
+  "/Users/gabrielbms/Repositorios/[2026-1] Fundamentos de IA/final/informe/main.tex" 1781401648.52034 52287 23e4dcffca7b8cba086f7b62f245ed15 ""
   "/usr/local/texlive/2026basic/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/local/texlive/2026basic/texmf-dist/fonts/tfm/adobe/courier/pcrb7t.tfm" 1136768653 960 4ab65358b8406f30ef5496c8c096d22b ""
   "/usr/local/texlive/2026basic/texmf-dist/fonts/tfm/adobe/courier/pcrb8r.tfm" 1136768653 1292 3059476c50a24578715759f22652f3d0 ""
@@ -101,11 +101,12 @@
   "/usr/local/texlive/2026basic/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1781366658 79517 8f21f8b9bc6f363eda0354a6434dbd3f ""
   "/usr/local/texlive/2026basic/texmf-var/web2c/pdftex/pdflatex.fmt" 1778807739 2966194 af7a66a80e4ad3b5ca3cec2ba27cdce9 ""
   "/usr/local/texlive/2026basic/texmf.cnf" 1772405582 628 bbc09d6d38872d53c11bb48dc9b14e88 ""
-  "main.aux" 1781385415.22637 5828 ab9768bd886b4cc429ecad4ed9b76981 "pdflatex"
-  "main.tex" 1781385348.35834 45365 01766d70d041b63af03baaa720bce92c ""
-  "metrics_timeline.png" 1781385297.7402 19710 0f1fe97a32beecc38015a1cbf2a18103 ""
-  "scalability_time.png" 1781385297.85221 35234 8ddaeac04e3e73fb903f105ef54c9625 ""
-  "sensitivity_N.png" 1781385297.68349 18380 57ef2572b07b761de8c86604d31e417c ""
+  "comm_impact.png" 1781401608.25802 52895 d6bf231ae5f1ca50a58d09655641b754 ""
+  "main.aux" 1781401752.63399 6811 0f26e6131770b19d525b86269c2dad24 "pdflatex"
+  "main.tex" 1781401648.52034 52287 23e4dcffca7b8cba086f7b62f245ed15 ""
+  "scalability_time.png" 1781401608.34582 46401 3f0cd60af71295b5ebcf223004a6dbd8 ""
+  "sensitivity_N.png" 1781401607.93635 18410 957e2c8e628ed205d39ac2c5795d571c ""
+  "sensitivity_P_negro.png" 1781401608.03145 51207 0dd12b4793ca66d5317d28cc794caa89 ""
   (generated)
   "main.aux"
   "main.log"

@@ -41,6 +41,7 @@ class MetricsCollector:
                 self._celdas_visitadas_por_robot[r.id] = set()
                 self._pasos_sin_avance[r.id] = 0
                 
+        for r in self._all_robots.values():
             iridio_total_recolectado += r.iridio_count
             memoria_size_total += len(r.memory)
             # Solo consideramos como reglas generadas a aquellas que superan las reglas base, 
@@ -111,8 +112,24 @@ class MetricsCollector:
               - (w3 * bucles_i) \
               + (w4 * tiempo_sobrevivido / config.T_FIN) \
               - (w5 * pasos_sin_avance)
-              
         return score
+
+    def compute_robot_score_breakdown(self, robot) -> Dict[str, float]:
+        """Devuelve los componentes de R_i"""
+        w1, w2, w3, w4, w5 = config.W1_IRIDIO, config.W2_DEATH, config.W3_LOOP, config.W4_SURVIVE, config.W5_IDLE
+        
+        deaths_i = 0 if robot.is_alive else 1
+        bucles_i = 1 if (not robot.is_alive and robot.death_cause and "LOOP" in robot.death_cause.name) else 0
+        tiempo_sobrevivido = robot.step_count
+        pasos_sin_avance = self._pasos_sin_avance.get(robot.id, 0)
+        
+        return {
+            "iridio": (w1 * robot.iridio_count),
+            "death": -(w2 * deaths_i),
+            "bucle": -(w3 * bucles_i),
+            "survival": (w4 * tiempo_sobrevivido / config.T_FIN),
+            "idle": -(w5 * pasos_sin_avance)
+        }
 
     def compute_global_score(self) -> float:
         """Calcula R_global (REQ-MET-02)"""
@@ -166,6 +183,7 @@ class MetricsCollector:
             "survival_rate": self.compute_survival_rate(),
             "collection_efficiency": self.compute_collection_efficiency(),
             "robots_scores": {r.id: self.compute_robot_score(r) for r in self._all_robots.values()},
+            "robots_scores_breakdown": {r.id: self.compute_robot_score_breakdown(r) for r in self._all_robots.values()},
             "iridio_por_robot": iridio_por_robot,
             "causas_muerte_robots": causas_muerte,
             "reglas_aprendidas_por_robot": reglas_por_robot
@@ -174,6 +192,7 @@ class MetricsCollector:
         if world is not None:
             total_free_cells = sum(1 for z in range(world.N) for y in range(world.N) for x in range(world.N) if world.grid[x][y][z].is_free())
             summary["exploration_efficiency"] = self.compute_exploration_efficiency(total_free_cells)
+            summary["visit_heatmap"] = self.get_visit_heatmap(world.N)
             
         if monsters is not None:
             summary["monster_scores"] = {m.id: self.compute_monster_score(m) for m in monsters}

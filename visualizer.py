@@ -107,6 +107,43 @@ def plot_metrics_timeline(metrics_history, out_dir: str = "results"):
     plt.savefig(filepath, bbox_inches='tight')
     plt.close()
 
+def plot_p_negro_sensitivity(results_dict, out_dir: str = "results"):
+    if "variation_P_NEGRO" not in results_dict:
+        return
+        
+    _ensure_dir(out_dir)
+    p_vals = sorted(list(results_dict["variation_P_NEGRO"].keys()))
+    r_vals = [results_dict["variation_P_NEGRO"][p]["R_global"] for p in p_vals]
+    ts_vals = [results_dict["variation_P_NEGRO"][p]["TS"] for p in p_vals]
+    ee_vals = [results_dict["variation_P_NEGRO"][p]["EE"] for p in p_vals]
+    er_vals = [results_dict["variation_P_NEGRO"][p]["ER"] for p in p_vals]
+    
+    fig, ax1 = plt.subplots(figsize=(10, 6))
+    ax1.set_xlabel('P_negro')
+    ax1.set_ylabel('R_global', color='tab:red')
+    ax1.plot(p_vals, r_vals, color='tab:red', marker='o', linewidth=2, label='R_global')
+    ax1.tick_params(axis='y', labelcolor='tab:red')
+    ax1.grid(True, linestyle='--', alpha=0.7)
+    
+    ax2 = ax1.twinx()
+    ax2.set_ylabel('Métricas de Eficiencia (TS, EE, ER)', color='tab:blue')
+    ax2.plot(p_vals, ts_vals, color='tab:blue', marker='s', linewidth=2, linestyle='--', label='Tasa de Supervivencia (TS)')
+    ax2.plot(p_vals, ee_vals, color='tab:green', marker='^', linewidth=2, linestyle='-.', label='Eficiencia Exploración (EE)')
+    ax2.plot(p_vals, er_vals, color='tab:purple', marker='d', linewidth=2, linestyle=':', label='Eficiencia Recolección (ER)')
+    ax2.tick_params(axis='y', labelcolor='tab:blue')
+    ax2.set_ylim(-0.05, 1.05)
+    
+    # Legend for multiple axes
+    lines_1, labels_1 = ax1.get_legend_handles_labels()
+    lines_2, labels_2 = ax2.get_legend_handles_labels()
+    ax2.legend(lines_1 + lines_2, labels_1 + labels_2, loc='upper center', bbox_to_anchor=(0.5, -0.15), ncol=2)
+    
+    plt.title('Sensibilidad frente a P_negro (Agujeros Negros)')
+    fig.tight_layout()
+    filepath = os.path.join(out_dir, "sensitivity_P_negro.png")
+    plt.savefig(filepath, bbox_inches='tight')
+    plt.close()
+
 def plot_heatmap(visit_counts, N, out_dir: str = "results"):
     """Mapa de calor 2D (suma de visitas por celda, colapsando eje Z)"""
     _ensure_dir(out_dir)
@@ -154,15 +191,17 @@ def plot_scalability(scalability_results, out_dir: str = "results"):
     _ensure_dir(out_dir)
     
     x = sorted(scalability_results.keys())
-    y = [scalability_results[k] for k in x]
+    y = [scalability_results[k]["avg_time"] for k in x]
+    err = [scalability_results[k]["std_dev"] for k in x]
     
-    plt.figure(figsize=(8, 6))
-    plt.plot(x, y, marker='o', linestyle='-', color='purple', linewidth=2)
+    plt.figure(figsize=(10, 6))
+    plt.errorbar(x, y, yerr=err, fmt='-o', color='purple', linewidth=2, capsize=5, label='Promedio ± Desv. Est.')
     
-    plt.title("Prueba de Escalabilidad")
     plt.ylabel("Tiempo Promedio de Ejecución (s)")
+    plt.xlabel("Dimensión N")
     plt.title("Escalabilidad del Simulador: Tiempo vs Tamaño del Mundo (N)")
     plt.grid(True, linestyle='--', alpha=0.7)
+    plt.legend()
     
     filepath = os.path.join(out_dir, "scalability_time.png")
     plt.savefig(filepath, bbox_inches='tight')
@@ -171,9 +210,9 @@ def plot_scalability(scalability_results, out_dir: str = "results"):
 def plot_communication_impact(results: dict, out_dir: str = "results"):
     """Grafica el impacto de la comunicación vs cantidad de robots."""
     _ensure_dir(out_dir)
-    robots = sorted(list(results.keys()))
-    scores_con = [results[r]["score_con"] for r in robots]
-    scores_sin = [results[r]["score_sin"] for r in robots]
+    robots = sorted(list(results["communication_impact"].keys()))
+    scores_con = [results["communication_impact"][r]["CON"] for r in robots]
+    scores_sin = [results["communication_impact"][r]["SIN"] for r in robots]
     
     plt.figure(figsize=(10, 6))
     plt.plot(robots, scores_con, marker='o', label='Con Comunicación', color='blue', linewidth=2)
@@ -203,5 +242,98 @@ def plot_score_distribution(robots_scores, out_dir: str = "results"):
     plt.ylabel("Frecuencia")
     
     filepath = os.path.join(out_dir, "robot_scores_histogram.png")
+    plt.savefig(filepath, bbox_inches='tight')
+    plt.close()
+
+def plot_iridium_histogram(iridio_por_robot: dict, out_dir: str = "results"):
+    """Histograma: iridio recolectado por cada robot (F3)"""
+    _ensure_dir(out_dir)
+    robots = [f"R{r}" for r in iridio_por_robot.keys()]
+    iridios = list(iridio_por_robot.values())
+    
+    plt.figure(figsize=(8, 6))
+    plt.bar(robots, iridios, color='gold', edgecolor='black')
+    
+    plt.title("Iridio Recolectado por Robot")
+    plt.xlabel("Robot ID")
+    plt.ylabel("Cantidad de Iridio")
+    plt.grid(axis='y', linestyle='--', alpha=0.7)
+    
+    filepath = os.path.join(out_dir, "iridium_histogram.png")
+    plt.savefig(filepath, bbox_inches='tight')
+    plt.close()
+
+def plot_death_causes_piechart(causas_muerte: dict, out_dir: str = "results"):
+    """Gráfico de Torta: Distribución de causas de muerte (F3)"""
+    _ensure_dir(out_dir)
+    if not causas_muerte:
+        return
+        
+    labels = list(causas_muerte.keys())
+    sizes = list(causas_muerte.values())
+    
+    plt.figure(figsize=(8, 8))
+    plt.pie(sizes, labels=labels, autopct='%1.1f%%', startangle=140, colors=['#ff9999','#66b3ff','#99ff99','#ffcc99'])
+    plt.title("Distribución de Causas de Muerte")
+    
+    filepath = os.path.join(out_dir, "death_causes_pie.png")
+    plt.savefig(filepath, bbox_inches='tight')
+    plt.close()
+
+def plot_n_robot_sensitivity(results_dict, out_dir: str = "results"):
+    """Línea: Impacto de N_robot (F5)"""
+    if "variation_N_ROBOT" not in results_dict:
+        return
+        
+    _ensure_dir(out_dir)
+    r_vals = sorted(list(results_dict["variation_N_ROBOT"].keys()))
+    rg_vals = [results_dict["variation_N_ROBOT"][r]["R_global"] for r in r_vals]
+    ts_vals = [results_dict["variation_N_ROBOT"][r]["TS"] for r in r_vals]
+    
+    fig, ax1 = plt.subplots(figsize=(8, 5))
+    ax1.set_xlabel('N_robot (Cantidad de Robots)')
+    ax1.set_ylabel('R_global', color='tab:red')
+    ax1.plot(r_vals, rg_vals, color='tab:red', marker='o', linewidth=2, label='R_global')
+    ax1.tick_params(axis='y', labelcolor='tab:red')
+    ax1.grid(True, linestyle='--', alpha=0.7)
+    
+    ax2 = ax1.twinx()
+    ax2.set_ylabel('Tasa de Supervivencia (TS)', color='tab:blue')
+    ax2.plot(r_vals, ts_vals, color='tab:blue', marker='s', linewidth=2, linestyle='--', label='TS')
+    ax2.tick_params(axis='y', labelcolor='tab:blue')
+    ax2.set_ylim(-0.05, 1.05)
+    
+    plt.title('Sensibilidad frente a la Densidad de Presas (N_robot)')
+    fig.tight_layout()
+    filepath = os.path.join(out_dir, "sensitivity_n_robot.png")
+    plt.savefig(filepath, bbox_inches='tight')
+    plt.close()
+
+def plot_n_monstruos_sensitivity(results_dict, out_dir: str = "results"):
+    """Línea: Impacto de N_monstruos (F5)"""
+    if "variation_N_MONSTRUOS" not in results_dict:
+        return
+        
+    _ensure_dir(out_dir)
+    m_vals = sorted(list(results_dict["variation_N_MONSTRUOS"].keys()))
+    rg_vals = [results_dict["variation_N_MONSTRUOS"][m]["R_global"] for m in m_vals]
+    ts_vals = [results_dict["variation_N_MONSTRUOS"][m]["TS"] for m in m_vals]
+    
+    fig, ax1 = plt.subplots(figsize=(8, 5))
+    ax1.set_xlabel('N_monstruos (Cantidad de Depredadores)')
+    ax1.set_ylabel('R_global', color='tab:red')
+    ax1.plot(m_vals, rg_vals, color='tab:red', marker='v', linewidth=2, label='R_global')
+    ax1.tick_params(axis='y', labelcolor='tab:red')
+    ax1.grid(True, linestyle='--', alpha=0.7)
+    
+    ax2 = ax1.twinx()
+    ax2.set_ylabel('Tasa de Supervivencia (TS)', color='tab:blue')
+    ax2.plot(m_vals, ts_vals, color='tab:blue', marker='s', linewidth=2, linestyle='--', label='TS')
+    ax2.tick_params(axis='y', labelcolor='tab:blue')
+    ax2.set_ylim(-0.05, 1.05)
+    
+    plt.title('Sensibilidad frente a la Densidad de Depredadores (N_monstruos)')
+    fig.tight_layout()
+    filepath = os.path.join(out_dir, "sensitivity_n_monstruos.png")
     plt.savefig(filepath, bbox_inches='tight')
     plt.close()

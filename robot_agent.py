@@ -52,7 +52,7 @@ class RobotAgent:
         if not self.is_alive:
             return {"action": Action.WAIT.value, "reason": "DEAD"}
 
-        perception = self.perceive(world, position)
+        perception = self.perceive(world, position, t)
         action = self.decide(perception)
         
         # Protocolo de comunicación (Simulator se encarga de ejecutar y actualizar memoria)
@@ -70,7 +70,7 @@ class RobotAgent:
     # CAPA 1: PERCEPCIÓN
     # =========================================================================
 
-    def perceive(self, world, position: Tuple[int, int, int]) -> Perception:
+    def perceive(self, world, position: Tuple[int, int, int], t: int = 0) -> Perception:
         x, y, z = position
         cell = world.get_cell(x, y, z)
         
@@ -92,7 +92,7 @@ class RobotAgent:
                 robot_delante = True
                 
         # Infinitómetro (Bucle)
-        bucle = self._sense_infinitometro()
+        bucle = self._sense_infinitometro(t)
 
         return Perception(
             olor=olor,
@@ -105,17 +105,24 @@ class RobotAgent:
             bucle=bucle
         )
 
-    def _sense_infinitometro(self) -> bool:
+    def _sense_infinitometro(self, t: int = 0) -> bool:
         """Analiza la memoria y detecta bucles (patrones repetidos)."""
-        if len(self.memory) < config.LOOP_WINDOW:
+        import config
+        loop_window = config.LOOP_WINDOW
+        
+        # REC 3: Umbral Adaptativo del Infinitómetro
+        if getattr(config, "ENABLE_ADAPTIVE_LOOP", False):
+            loop_window = int(config.LOOP_WINDOW * (1 + t / config.T_FIN))
+            
+        if len(self.memory) < loop_window:
             return False
             
-        recent = self.memory[-config.LOOP_WINDOW:]
-        pos_str = "".join([f"{r.posicion}" for r in recent])
+        recent = self.memory[-loop_window:]
+        pos_str = "".join([f"{r.posicion}-{r.percepcion.direccion}" for r in recent])
         
-        for length in range(config.LOOP_MIN_LEN, config.LOOP_WINDOW // config.LOOP_THRESHOLD + 1):
+        for length in range(config.LOOP_MIN_LEN, loop_window // config.LOOP_THRESHOLD + 1):
             for start in range(len(recent) - length * config.LOOP_THRESHOLD + 1):
-                subseq = "".join([f"{r.posicion}" for r in recent[start:start+length]])
+                subseq = "".join([f"{r.posicion}-{r.percepcion.direccion}" for r in recent[start:start+length]])
                 if pos_str.count(subseq) >= config.LOOP_THRESHOLD:
                     return True
         return False
@@ -143,7 +150,6 @@ class RobotAgent:
         # Utilidad
         candidates = [Action.MOVE_FORWARD, Action.TURN_0, Action.TURN_1, Action.TURN_2, Action.TURN_3]
         scores = {action: self.evaluate_utility(action, perception) for action in candidates}
-        
         # Resolver empates determinísticamente garantizando la mejor acción
         best_score = max(scores.values())
         best_actions = [a for a, s in scores.items() if s == best_score]
@@ -160,6 +166,16 @@ class RobotAgent:
                 score -= config.W2_DEATH  # Huir del peligro
             if perception.vacuscopio:
                 score -= 20.0  # Si acaba de chocar contra el vacío, desincentivar avanzar
+                
+            # REC 2: Penalización por salir del sector asignado
+            if getattr(config, "ENABLE_SECTORS", False) and hasattr(self, "assigned_octant"):
+                dx, dy, dz = self.direction
+                nx, ny, nz = perception.posicion[0] + dx, perception.posicion[1] + dy, perception.posicion[2] + dz
+                oct_x = 1 if nx >= config.N / 2 else 0
+                oct_y = 1 if ny >= config.N / 2 else 0
+                oct_z = 1 if nz >= config.N / 2 else 0
+                if (oct_x, oct_y, oct_z) != self.assigned_octant:
+                    score -= 20.0  # Fuerte penalización por salirse de su sector
                 
             # Preferencia a explorar (frente a quedarse rotando en el mismo lugar)
             score += 1.0
@@ -270,7 +286,7 @@ class RobotAgent:
                 def cond_olor(p: Perception, a: Action, d=bad_dir) -> bool:
                     return p.olor and a == Action.MOVE_FORWARD and p.direccion == d
                     
-                rule = Rule(condicion=cond_olor, descripcion="Penalizar avance tras olor", weight_modifier=-100.0)
+                rule = Rule(condicion=cond_olor, descripcion="Penalizar avance tras olor", weight_modifier=-10.0)
                 if not any(r.descripcion == rule.descripcion for r in self.rules):
                     self.rules.append(rule)
 

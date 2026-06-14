@@ -40,6 +40,13 @@ FPS = 10
 EXPORT_FRAMES = False
 
 # =============================================================================
+# RECOMENDACIONES (Banderas experimentales)
+# =============================================================================
+ENABLE_MEMORY_BROADCAST = False
+ENABLE_SECTORS = False
+ENABLE_ADAPTIVE_LOOP = False
+
+# =============================================================================
 # ENUMERADORES
 # =============================================================================
 class CellType(Enum):
